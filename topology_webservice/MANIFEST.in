@@ -1,0 +1,2 @@
+include versioneer.py
+include topology_webservice/_version.py
