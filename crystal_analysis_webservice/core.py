@@ -64,5 +64,9 @@ def run_topology_analysis(filecontent: str, extension: str = "cif"):
         except Exception:
             raise ValueError("Some error occured")
 
-    return {"rcsr_name": out, "api_version": __version__}
+    return {
+        "rcsr_name": out,
+        "api_version": __version__,
+        "link_to_rscr": f"http://rcsr.anu.edu.au/nets/{out}",
+    }
 

@@ -13,3 +13,4 @@ class CrystalanalysisModel(BaseModel):
 class TopologyResponse(BaseModel):
     rcsr_name: str
     api_version: Optional[str] = __version__
+    link_to_rcsr: Optional[str]
