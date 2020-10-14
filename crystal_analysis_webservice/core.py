@@ -2,6 +2,7 @@ import subprocess
 import os
 import tempfile
 import contextlib
+from func_timeout import func_set_timeout
 
 JULIAPACKAGE = os.getenv("JULIAPACKAGE")
 PROJECTPATH = str(os.path.abspath(os.path.join(JULIAPACKAGE, "../..")))
@@ -36,11 +37,12 @@ def temporary_filename(suffix=None):
         os.unlink(tmp_name)
 
 
-def run_topology_analysis(filecontent: str, extension: str = "cif"):
+@func_set_timeout(60)
+def run_topology_analysis(fileContent: str, extension: str = "cif"):
     out = ""
     with temporary_filename("." + extension) as filename:
         with open(filename, "w") as fh:
-            fh.write(filecontent)
+            fh.write(fileContent)
         process = subprocess.Popen(
             JULIA_EXEC_COMMAND.format(
                 JULIAPACKAGE=JULIAPACKAGE, PROJECTPATH=PROJECTPATH, file=filename

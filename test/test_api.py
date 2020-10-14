@@ -17,7 +17,7 @@ def test_read_main():
 def test_topology_analysis():
     with open(os.path.join(THIS_DIR, "HKUST-1.cif"), "r") as fh:
         content = fh.read()
-    response = client.post("/topology", json={"filecontent": content})
+    response = client.post("/topology", json={"fileContent": content})
     assert response.status_code == 200
     body = response.json()
     assert "rcsr_name" in body.keys()

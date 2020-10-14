@@ -6,7 +6,7 @@ from pydantic import BaseModel, validator
 
 
 class CrystalanalysisModel(BaseModel):
-    filecontent: str
+    fileContent: str
     extension: Optional[str] = "cif"
 
 
