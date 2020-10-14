@@ -47,4 +47,7 @@ def topology_analysis(parameters: CrystalanalysisModel):
         return run_topology_analysis(parameters.fileContent, parameters.extension)
     except Exception as excep:
         logger.error("Crystal topology analysis failed {}".format(excep))
-        raise HTTPException(status_code=400, detail="Crystal topology analysis failed")
+        raise HTTPException(
+            status_code=400,
+            detail="Crystal topology analysis failed due to {}".format(excep),
+        )

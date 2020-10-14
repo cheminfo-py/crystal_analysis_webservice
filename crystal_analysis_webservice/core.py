@@ -56,7 +56,13 @@ def run_topology_analysis(fileContent: str, extension: str = "cif"):
         try:
             out_ = out_.decode("ascii")
             out_ = out_.split("\n")
+            if "ERROR" in out:
+                errorline = None
+                for line in out_:
+                    if "ERROR" in line:
+                        errorline = line
 
+                raise ValueError(errorline)
             if len(out_) == 3:
                 out = out_[-2]
                 os.unlink(out_[0].split()[-1])
