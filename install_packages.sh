@@ -20,7 +20,7 @@ apt-get update
 apt-get -y upgrade
 
 # Install a new package, without unnecessary recommended packages:
-apt-get -y install --no-install-recommends build-essential
+apt-get -y install --no-install-recommends build-essential wget
 
 # Delete cached files we don't need anymore:
 apt-get clean

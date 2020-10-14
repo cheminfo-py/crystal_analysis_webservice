@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   ciftools:
-    image: ghcr.io/cheminfo-py/topology_webservice:latest
+    image: ghcr.io/cheminfo-py/crystal_analysis_webservice:latest
     restart: always
     environment:
       - PORT=${PORT}

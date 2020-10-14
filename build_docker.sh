@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t topology_webservice .
+docker build -t crystal_analysis_webservice .

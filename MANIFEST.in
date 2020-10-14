@@ -1,2 +1,2 @@
 include versioneer.py
-include topology_webservice/_version.py
+include crystal_analysis_webservice/_version.py

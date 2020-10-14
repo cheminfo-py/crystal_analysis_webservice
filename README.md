@@ -1,8 +1,8 @@
-# topology_webservice
+# crystal_analysis_webservice
 
-![Docker Image Build and Test CI](https://github.com/cheminfo-py/topology_webservice/workflows/Docker%20Image%20Build%20CI/badge.svg)
+![Docker Image Build and Test CI](https://github.com/cheminfo-py/crystal_analysis_webservice/workflows/Docker%20Image%20Build%20CI/badge.svg)
 
-This is a webservice built using [FastAPI](https://github.com/tiangolo/fastapi). It exposes the great [Julia topology analysis code developed by Lionel Zoubritzky](https://github.com/coudertlab/CrystalNets.jl).
+This is a webservice built using [FastAPI](https://github.com/tiangolo/fastapi). It exposes the great [Julia topology analysis code developed by Lionel Zoubritzky](https://github.com/coudertlab/CrystalNets.jl). We will add more tools, like zeo++ in due course.
 
 ## Usage
 
