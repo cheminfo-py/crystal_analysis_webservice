@@ -16,7 +16,7 @@ To be usable on Heroku or Dokku, which use `PORT`environmental variables, you ne
 For production, you may want to use Docker compose
 
 ```bash
-docker-compose up
+docker-compose up --build -d
 ```
 
 ## Docs
