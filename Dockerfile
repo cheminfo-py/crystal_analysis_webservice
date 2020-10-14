@@ -16,7 +16,7 @@ RUN mkdir "/opt/julia-${JULIA_VERSION}" && \
 RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
 RUN julia -e 'import Pkg; Pkg.add(url="https://github.com/coudertlab/CrystalNets.jl")'
 RUN export JULIAPACKAGE=$(julia -e 'using CrystalNets; println(pathof(CrystalNets))')
-
+ENV JULIAPACKAGE=$JULIAPACKAGE
 RUN useradd cheminfo
 
 WORKDIR /home/cheminfo
