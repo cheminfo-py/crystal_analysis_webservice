@@ -37,7 +37,7 @@ def temporary_filename(suffix=None):
         os.unlink(tmp_name)
 
 
-@func_set_timeout(60)
+@func_set_timeout(120)
 def run_topology_analysis(fileContent: str, extension: str = "cif"):
     out = ""
     with temporary_filename("." + extension) as filename:
