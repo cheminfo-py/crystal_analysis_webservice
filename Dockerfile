@@ -29,4 +29,4 @@ COPY README.md .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD gunicorn -w 4 crystal_analysis_webservice.crystal_analysis_webservice:app -b 0.0.0.0:$PORT -k uvicorn.workers.UvicornWorker
+CMD gunicorn -w 2 --backlog 16 crystal_analysis_webservice.crystal_analysis_webservice:app -b 0.0.0.0:$PORT -k uvicorn.workers.UvicornWorker
