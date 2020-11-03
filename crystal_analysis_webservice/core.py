@@ -37,7 +37,7 @@ def temporary_filename(suffix=None):
         os.unlink(tmp_name)
 
 
-@func_set_timeout(120)
+@func_set_timeout(300)
 def run_topology_analysis(fileContent: str, extension: str = "cif"):
     out = ""
     with temporary_filename("." + extension) as filename:
@@ -63,18 +63,18 @@ def run_topology_analysis(fileContent: str, extension: str = "cif"):
                         errorline = line
 
                 raise ValueError(errorline)
-            if len(out_) == 3:
+            if out_:
                 out = out_[-2]
                 os.unlink(out_[0].split()[-1])
             else:
                 raise ValueError
 
-        except Exception:
-            raise ValueError("Some error occured")
+        except Exception as e:
+            raise ValueError("Some error occured {}".format(e)) from e
 
     return {
-        "rcsr_name": out,
-        "api_version": __version__,
-        "link_to_rscr": f"http://rcsr.anu.edu.au/nets/{out}",
+        "rcsrName": out,
+        "apiVersion": __version__,
+        "rscrLink": f"http://rcsr.anu.edu.au/nets/{out}",
     }
 

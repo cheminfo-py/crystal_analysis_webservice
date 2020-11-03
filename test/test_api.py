@@ -20,6 +20,6 @@ def test_topology_analysis():
     response = client.post("/topology", json={"fileContent": content})
     assert response.status_code == 200
     body = response.json()
-    assert "rcsr_name" in body.keys()
-    assert "api_version" in body.keys()
-    assert body["rcsr_name"] == "tbo"
+    assert "rcsrName" in body.keys()
+    assert "apiVersion" in body.keys()
+    assert body["rcsrName"] == "tbo"
