@@ -7,7 +7,7 @@ from func_timeout import func_set_timeout
 JULIAPACKAGE = os.getenv("JULIAPACKAGE")
 PROJECTPATH = str(os.path.abspath(os.path.join(JULIAPACKAGE, "../..")))
 
-JULIA_EXEC_COMMAND = "julia --project={PROJECTPATH} {JULIAPACKAGE} -c auto {file}"
+JULIA_EXEC_COMMAND = "julia -p 1 --project={PROJECTPATH} {JULIAPACKAGE} -c auto {file}"
 from . import __version__
 
 
