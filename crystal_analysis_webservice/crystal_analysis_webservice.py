@@ -5,6 +5,7 @@ Expose the topology analysis tool developed by C Coudert's group
 from . import __version__
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 from .model import TopologyResponse, CrystalanalysisModel
 from .core import run_topology_analysis
 import logging
@@ -15,6 +16,16 @@ app = FastAPI(
     description="his webservice provides Crystal analysis using the CrystalNets Julia package",
     version=__version__,
 )
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 logger = logging.getLogger("api")
 
