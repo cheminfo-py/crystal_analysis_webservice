@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from fastapi.testclient import TestClient
 import os
+import sys
 from crystal_analysis_webservice import __version__, app
 
 client = TestClient(app)

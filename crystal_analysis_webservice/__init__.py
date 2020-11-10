@@ -3,8 +3,6 @@ crystal_analysis_webservice
 Expose the topology analysis tool developed by C Coudert's group
 """
 
-
-
 # Handle versioneer
 from ._version import get_versions
 versions = get_versions()

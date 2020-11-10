@@ -19,6 +19,7 @@ else:
 
 with open(os.path.join(THIS_DIR, "HKUST-1.cif"), "r") as fh:
     content = fh.read()
+print(json.dumps({"fileContent": content}))
 r = requests.post(
     "http://localhost:8091/topology/", data=json.dumps({"fileContent": content})
 )

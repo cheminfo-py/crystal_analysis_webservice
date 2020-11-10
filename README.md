@@ -19,6 +19,27 @@ For production, you may want to use Docker compose
 docker-compose up --build -d
 ```
 
+To test the image, you can go to `localhost:$PORT/docs`.
+
+You could for example, use the request body in `.example_request.json`.
+
+<a href="url"><img src="_static/topology_input.png" align="center" width="460" ></a>
+
+
+
+The analysis takes some time (1--2 min) and should result in an object of the following form 
+```
+{
+  "rcsrName": "string",
+  "apiVersion": "string",
+  "rcsrLink": "string"
+}
+```
+
+<a href="url"><img src="_static/topology_response.png" align="center" width="460" ></a>
+
+
+
 ## Docs
 
 You find docs on `http://127.0.0.1:$PORT/docs.`

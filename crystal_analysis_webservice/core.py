@@ -75,6 +75,6 @@ def run_topology_analysis(fileContent: str, extension: str = "cif"):
     return {
         "rcsrName": out,
         "apiVersion": __version__,
-        "rscrLink": f"http://rcsr.anu.edu.au/nets/{out}",
+        "rcsrLink": f"http://rcsr.anu.edu.au/nets/{out}",
     }
 
