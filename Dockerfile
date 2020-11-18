@@ -22,6 +22,7 @@ COPY entrypoint.sh /
 WORKDIR /home/cheminfo
 
 COPY requirements.txt .
+COPY logging_config.ini .
 
 COPY crystal_analysis_webservice ./crystal_analysis_webservice
 
@@ -31,4 +32,4 @@ COPY README.md .
 RUN pip install --no-cache-dir -r requirements.txt
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD uvicorn crystal_analysis_webservice.crystal_analysis_webservice:app --host=0.0.0.0 --port=$PORT --workers=2 --loop="uvloop" --http="httptools" --log-level debug --limit-concurrency 2
+CMD uvicorn crystal_analysis_webservice.crystal_analysis_webservice:app --host=0.0.0.0 --port=$PORT --workers=$WORKERS --loop="uvloop" --http="httptools" --log-config=logging_config.ini --limit-concurrency=$CONCURRENCY_LIMIT
