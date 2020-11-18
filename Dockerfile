@@ -14,7 +14,7 @@ RUN mkdir "/opt/julia-${JULIA_VERSION}" && \
     tar xzf "julia-${JULIA_VERSION}-linux-x86_64.tar.gz" -C "/opt/julia-${JULIA_VERSION}" --strip-components=1 && \
     rm "/tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz"
 RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
-RUN julia -e 'import Pkg; Pkg.add(url="https://github.com/coudertlab/CrystalNets.jl")'
+RUN julia -e 'import Pkg; Pkg.add(url="https://github.com/kjappelbaum/CrystalNets.jl")'
 RUN useradd cheminfo
 
 COPY entrypoint.sh /

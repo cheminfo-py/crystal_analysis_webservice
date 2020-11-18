@@ -2,16 +2,12 @@
 crystal_analysis_webservice.py
 Expose the topology analysis tool developed by C Coudert's group
 """
-from . import __version__
+from . import __version__, logger
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from .model import TopologyResponse, CrystalanalysisModel
 from .core import run_topology_analysis
-import logging
-from diskcache import Cache
-
-cache = Cache()
 
 app = FastAPI(
     title="CrystalAnalysis webservice",
@@ -29,11 +25,9 @@ app.add_middleware(
 )
 
 
-logger = logging.getLogger("api")
-
-
 @app.get("/version")
 def read_version():
+    logger.debug("Got GET to /version")
     return {"version": __version__}
 
 
@@ -55,7 +49,7 @@ def root():
 
 @app.post("/topology", response_model=TopologyResponse)
 def topology_analysis(parameters: CrystalanalysisModel):
-
+    logger.debug("Got POST to /topology")
     try:
         return run_topology_analysis(parameters.fileContent, parameters.extension)
     except Exception as excep:

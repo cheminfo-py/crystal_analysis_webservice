@@ -21,13 +21,12 @@ docker-compose up --build -d
 
 To test the image, you can go to `localhost:$PORT/docs`.
 
-You could for example, use the request body in `.example_request.json`.
+You could for example, use the request body from one of the files in the folder `.example_requests`.
 
 <a href="url"><img src="_static/topology_input.png" align="center" width="460" ></a>
 
+The analysis takes some time (1--2 min) and should result in an object of the following form
 
-
-The analysis takes some time (1--2 min) and should result in an object of the following form 
 ```
 {
   "rcsrName": "string",
@@ -38,7 +37,7 @@ The analysis takes some time (1--2 min) and should result in an object of the fo
 
 <a href="url"><img src="_static/topology_response.png" align="center" width="460" ></a>
 
-
+To increase the verbosity of the logs you can export the `LOGLEVEL=debug` as environment variable (or place it in `.env`)
 
 ## Docs
 
