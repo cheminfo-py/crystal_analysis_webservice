@@ -2,13 +2,15 @@ import subprocess
 import os
 import tempfile
 import contextlib
+from types import resolve_bases
 from func_timeout import func_set_timeout
+import hashlib
 
 JULIAPACKAGE = os.getenv("JULIAPACKAGE")
 PROJECTPATH = str(os.path.abspath(os.path.join(JULIAPACKAGE, "../..")))
 
 JULIA_EXEC_COMMAND = "julia -p 1 --project={PROJECTPATH} {JULIAPACKAGE} -c auto {file}"
-from . import __version__
+from . import __version__, cache
 
 
 @contextlib.contextmanager
@@ -39,6 +41,18 @@ def temporary_filename(suffix=None):
 
 @func_set_timeout(300)
 def run_topology_analysis(fileContent: str, extension: str = "cif"):
+    m = hashlib.md5()
+    m.update(fileContent)
+    hash = m.hexdigest()
+    response = None
+    try:
+        response = cache.get(hash)
+    except KeyError:
+        pass
+
+    if response:
+        return response
+
     out = ""
     with temporary_filename("." + extension) as filename:
         with open(filename, "w") as fh:
@@ -76,9 +90,12 @@ def run_topology_analysis(fileContent: str, extension: str = "cif"):
         except Exception as e:
             raise ValueError("Some error occured {}".format(e)) from e
 
-    return {
-        "rcsrName": out,
-        "apiVersion": __version__,
-        "rcsrLink": f"http://rcsr.anu.edu.au/nets/{out}",
-    }
+        response = {
+            "rcsrName": out,
+            "apiVersion": __version__,
+            "rcsrLink": f"http://rcsr.anu.edu.au/nets/{out}",
+        }
 
+        cache.set(hash, response)
+
+    return response
