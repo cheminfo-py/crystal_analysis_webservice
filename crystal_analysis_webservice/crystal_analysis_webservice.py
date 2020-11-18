@@ -9,7 +9,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from .model import TopologyResponse, CrystalanalysisModel
 from .core import run_topology_analysis
 import logging
+from diskcache import Cache
 
+cache = Cache()
 
 app = FastAPI(
     title="CrystalAnalysis webservice",

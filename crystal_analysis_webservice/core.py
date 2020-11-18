@@ -64,8 +64,12 @@ def run_topology_analysis(fileContent: str, extension: str = "cif"):
 
                 raise ValueError(errorline)
             if out_:
-                out = out_[-2]
-                os.unlink(out_[0].split()[-1])
+                if len(out_) > 2:
+                    out = out_[-2]
+                    os.unlink(out_[0].split()[-1])
+                else:
+                    out = out_[0]
+
             else:
                 raise ValueError
 
