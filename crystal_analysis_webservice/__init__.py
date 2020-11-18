@@ -6,12 +6,7 @@ import os
 import logging
 from fastapi.logger import logger
 
-gunicorn_error_logger = logging.getLogger("gunicorn.error")
-gunicorn_logger = logging.getLogger("gunicorn")
-uvicorn_access_logger = logging.getLogger("uvicorn.access")
-uvicorn_access_logger.handlers = gunicorn_error_logger.handlers
 
-logger.handlers = gunicorn_error_logger.handlers
 LOGLEVEL = os.getenv("LOGLEVEL")
 
 if LOGLEVEL == "debug":
