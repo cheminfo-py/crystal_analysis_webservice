@@ -2,7 +2,11 @@
 
 ![Docker Image Build and Test CI](https://github.com/cheminfo-py/crystal_analysis_webservice/workflows/Docker%20Image%20Build%20CI/badge.svg)
 
-This is a webservice built using [FastAPI](https://github.com/tiangolo/fastapi). It exposes the great [Julia topology analysis code developed by Lionel Zoubritzky](https://github.com/coudertlab/CrystalNets.jl). We will add more tools, like zeo++ in due course.
+This is a webservice built using [FastAPI](https://github.com/tiangolo/fastapi). It exposes the great [Julia topology analysis code developed by Lionel Zoubritzky](https://github.com/coudertlab/CrystalNets.jl).
+
+We will add more tools, like zeo++ in due course.
+
+The service also uses file-based caching, using the `md5` hash of `fileContent` as key.
 
 ## Usage
 
@@ -43,11 +47,13 @@ The analysis takes some time (1--2 min) and should result in an object of the fo
 
 <a href="url"><img src="_static/topology_response.png" align="center" width="460" ></a>
 
-### Settings
+## Settings
 
-`CONCURRENCY_LIMIT` limits the number of concurrent connections before we raise a `503` error.
+For the image to work, you need to specify a few settings. You can do this, for example, via an `.env` file:
 
-The service also uses file-based caching, using the `md5` hash of `fileContent` as key.
+- `CONCURRENCY_LIMIT` limits the number of concurrent connections before we raise a `503` error.
+- `WORKERS` number of workers, we use on CPU per worker
+- `PORT` will be the port number at which you can reach the app
 
 ## Docs
 
