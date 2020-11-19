@@ -6,12 +6,18 @@ This is a webservice built using [FastAPI](https://github.com/tiangolo/fastapi).
 
 ## Usage
 
-To be usable on Heroku or Dokku, which use `PORT`environmental variables, you need to either create this environmental variable or put it into an `.env` file. For local development, the `run_docker.sh` script uses `8091`.
+To be usable on Heroku or Dokku, which use `PORT`environmental variables, you need to either create this environmental variable or put it into an `.env` file. You can start by renaming `.env.sample` to `.env`.
+
+### Development
+
+For local development, the `run_docker.sh` script uses `8091`.
 
 ```bash
 ./build_docker # builds the docker image
 ./run_docker # starts the service
 ```
+
+### Deployment
 
 For production, you may want to use Docker compose
 
@@ -21,13 +27,12 @@ docker-compose up --build -d
 
 To test the image, you can go to `localhost:$PORT/docs`.
 
-You could for example, use the request body in `.example_request.json`.
+You could for example, use the request body from one of the files in the folder `.example_requests`.
 
 <a href="url"><img src="_static/topology_input.png" align="center" width="460" ></a>
 
+The analysis takes some time (1--2 min) and should result in an object of the following form
 
-
-The analysis takes some time (1--2 min) and should result in an object of the following form 
 ```
 {
   "rcsrName": "string",
@@ -38,7 +43,11 @@ The analysis takes some time (1--2 min) and should result in an object of the fo
 
 <a href="url"><img src="_static/topology_response.png" align="center" width="460" ></a>
 
+### Settings
 
+`CONCURRENCY_LIMIT` limits the number of concurrent connections before we raise a `503` error.
+
+The service also uses file-based caching, using the `md5` hash of `fileContent` as key.
 
 ## Docs
 

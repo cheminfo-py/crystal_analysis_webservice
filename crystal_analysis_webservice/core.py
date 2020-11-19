@@ -2,13 +2,15 @@ import subprocess
 import os
 import tempfile
 import contextlib
+from types import resolve_bases
 from func_timeout import func_set_timeout
+import hashlib
 
 JULIAPACKAGE = os.getenv("JULIAPACKAGE")
 PROJECTPATH = str(os.path.abspath(os.path.join(JULIAPACKAGE, "../..")))
 
 JULIA_EXEC_COMMAND = "julia -p 1 --project={PROJECTPATH} {JULIAPACKAGE} -c auto {file}"
-from . import __version__
+from . import __version__, cache, logger
 
 
 @contextlib.contextmanager
@@ -39,8 +41,22 @@ def temporary_filename(suffix=None):
 
 @func_set_timeout(300)
 def run_topology_analysis(fileContent: str, extension: str = "cif"):
+    m = hashlib.md5()
+    m.update(fileContent.encode("utf-8"))
+    hash = m.hexdigest()
+    response = None
+    try:
+        response = cache.get(hash)
+    except KeyError:
+        pass
+    logger.debug("Response from cache for key {} is {}".format(hash, response))
+    if response is not None:
+        logger.info("Returning from cache")
+        return response
+
     out = ""
     with temporary_filename("." + extension) as filename:
+        logger.debug("Running Julia")
         with open(filename, "w") as fh:
             fh.write(fileContent)
         process = subprocess.Popen(
@@ -53,6 +69,7 @@ def run_topology_analysis(fileContent: str, extension: str = "cif"):
         )
         out_, err = process.communicate()
     if out_:
+        logger.debug("There is output from Julia {}".format(out_))
         try:
             out_ = out_.decode("ascii")
             out_ = out_.split("\n")
@@ -64,17 +81,25 @@ def run_topology_analysis(fileContent: str, extension: str = "cif"):
 
                 raise ValueError(errorline)
             if out_:
-                out = out_[-2]
-                os.unlink(out_[0].split()[-1])
+                if len(out_) > 2:
+                    out = out_[-2]
+                    os.unlink(out_[0].split()[-1])
+                else:
+                    out = out_[0]
+
             else:
                 raise ValueError
+
+            response = {
+                "rcsrName": out,
+                "apiVersion": __version__,
+                "rcsrLink": f"http://rcsr.anu.edu.au/nets/{out}",
+            }
+
+            logger.debug("Trying to set cache")
+            cache.set(hash, response)
 
         except Exception as e:
             raise ValueError("Some error occured {}".format(e)) from e
 
-    return {
-        "rcsrName": out,
-        "apiVersion": __version__,
-        "rcsrLink": f"http://rcsr.anu.edu.au/nets/{out}",
-    }
-
+    return response

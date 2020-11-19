@@ -24,3 +24,13 @@ def test_topology_analysis():
     assert "rcsrName" in body.keys()
     assert "apiVersion" in body.keys()
     assert body["rcsrName"] == "tbo"
+
+    with open(os.path.join(THIS_DIR, "diamond.cif"), "r") as fh:
+        content = fh.read()
+    response = client.post("/topology", json={"fileContent": content})
+    assert response.status_code == 200
+    body = response.json()
+
+    assert "rcsrName" in body.keys()
+    assert "apiVersion" in body.keys()
+    assert body["rcsrName"] == "dia"
